@@ -304,6 +304,7 @@ function Scene({
   runIntro,
   onIntroComplete,
   hudRef,
+  isMobile = false,
 }) {
   const [hoveredSection, setHoveredSection] = useState(null)
   const [dismissedForSection, setDismissedForSection] = useState(null)
@@ -314,6 +315,7 @@ function Scene({
   const nameRef = useRef(null)
   const titleRef = useRef(null)
   const shouldShowPrompt =
+    !isMobile &&
     !runIntro &&
     activeSection === null &&
     Boolean(focusedSection) &&

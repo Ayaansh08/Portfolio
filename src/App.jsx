@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import CockpitNav from './components/CockpitNav'
 import CoordinatesReadout from './components/CoordinatesReadout'
 import Cursor from './components/Cursor'
@@ -9,12 +9,24 @@ import Scene from './components/Scene'
 import SystemMonitor from './components/SystemMonitor'
 
 function App() {
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
   const [isLoading, setIsLoading] = useState(true)
   const [isIntroComplete, setIsIntroComplete] = useState(false)
   const [activeSection, setActiveSection] = useState(null)
   const [focusedSection, setFocusedSection] = useState('about')
   const sceneGroupRef = useRef(null)
   const hudRef = useRef(null)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
 
   const handleSectionChange = (section) => {
     setActiveSection(section)
@@ -24,14 +36,18 @@ function App() {
   }
 
   const handleNavigate = (section) => {
-    setActiveSection(null)
     setFocusedSection(section)
+    if (isMobile) {
+      setActiveSection(section)
+      return
+    }
+    setActiveSection(null)
   }
 
   return (
     <main className="relative h-screen w-screen">
       {isLoading && <Loader onComplete={() => setIsLoading(false)} />}
-      <Cursor />
+      {!isMobile && <Cursor />}
 
       <Scene
         activeSection={activeSection}
@@ -42,6 +58,7 @@ function App() {
         runIntro={!isLoading && !isIntroComplete}
         onIntroComplete={() => setIsIntroComplete(true)}
         hudRef={hudRef}
+        isMobile={isMobile}
       />
 
       <div
@@ -52,10 +69,10 @@ function App() {
           transition: 'opacity 0.2s linear',
         }}
       >
-        <HUDFrame />
-        <IdentityPanel />
-        <CoordinatesReadout focusedSection={focusedSection} />
-        {activeSection === null && <SystemMonitor />}
+        {!isMobile && <HUDFrame />}
+        {!isMobile && <IdentityPanel />}
+        {!isMobile && <CoordinatesReadout focusedSection={focusedSection} />}
+        {!isMobile && activeSection === null && <SystemMonitor />}
         <CockpitNav
           focusedSection={focusedSection}
           onNavigate={handleNavigate}
