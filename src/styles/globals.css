@@ -33,3 +33,18 @@ body {
 #root {
   min-height: 100vh;
 }
+
+@media (hover: none), (pointer: coarse) {
+  * {
+    cursor: auto !important;
+  }
+
+  button,
+  a,
+  .interactive {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
+}

@@ -76,6 +76,7 @@ function App() {
         <CockpitNav
           focusedSection={focusedSection}
           onNavigate={handleNavigate}
+          isMobile={isMobile}
           sceneGroupRef={sceneGroupRef}
         />
       </div>

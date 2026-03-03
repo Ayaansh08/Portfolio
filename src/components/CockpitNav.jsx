@@ -4,7 +4,7 @@ import TypewriterText from './TypewriterText'
 
 const SECTIONS = ['about', 'projects', 'skills', 'contact']
 
-function CockpitNav({ focusedSection, onNavigate }) {
+function CockpitNav({ focusedSection, onNavigate, isMobile = false }) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const panelRef = useRef(null)
   const scanlineRef = useRef(null)
@@ -86,11 +86,15 @@ function CockpitNav({ focusedSection, onNavigate }) {
         bottom: 0,
         left: 0,
         right: 0,
-        zIndex: 100,
+        zIndex: 120,
         background: 'rgba(0, 0, 8, 0.75)',
         backdropFilter: 'blur(16px)',
         borderTop: '1px solid rgba(203, 214, 255, 0.1)',
-        padding: '14px 32px',
+        paddingTop: isMobile ? '10px' : '14px',
+        paddingRight: isMobile ? '12px' : '32px',
+        paddingLeft: isMobile ? '12px' : '32px',
+        paddingBottom: isMobile ? 'calc(10px + env(safe-area-inset-bottom, 0px))' : '14px',
+        minHeight: isMobile ? '72px' : 'unset',
         overflow: 'hidden',
       }}
     >
@@ -122,32 +126,34 @@ function CockpitNav({ focusedSection, onNavigate }) {
           position: 'relative',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between',
+          justifyContent: isMobile ? 'center' : 'space-between',
           gap: '20px',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <span
-            style={{
-              color: '#7DFFAE',
-              animation: 'orbitengineCockpitBlink 2s infinite',
-              fontSize: '11px',
-            }}
-          >
-            {'\u25cf'}
-          </span>
-          <span
-            style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '12px',
-              letterSpacing: '0.3em',
-              color: 'var(--color-accent)',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {'\u25c8'} ORBITENGINE
-          </span>
-        </div>
+        {!isMobile && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span
+              style={{
+                color: '#7DFFAE',
+                animation: 'orbitengineCockpitBlink 2s infinite',
+                fontSize: '11px',
+              }}
+            >
+              {'\u25cf'}
+            </span>
+            <span
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: '12px',
+                letterSpacing: '0.3em',
+                color: 'var(--color-accent)',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {'\u25c8'} ORBITENGINE
+            </span>
+          </div>
+        )}
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <button
@@ -161,15 +167,21 @@ function CockpitNav({ focusedSection, onNavigate }) {
               color: '#00ff88',
               background: 'transparent',
               border: '1px solid rgba(0, 255, 136, 0.25)',
-              padding: '6px 14px',
+              padding: isMobile ? '8px 12px' : '6px 14px',
               transition: 'all 0.15s',
+              touchAction: 'manipulation',
+              WebkitTapHighlightColor: 'transparent',
+              WebkitTouchCallout: 'none',
+              userSelect: 'none',
             }}
             onMouseEnter={(event) => {
+              if (isMobile) return
               event.currentTarget.style.background = 'rgba(0, 255, 136, 0.08)'
               event.currentTarget.style.borderColor = 'rgba(0, 255, 136, 0.6)'
               event.currentTarget.style.textShadow = '0 0 8px #00ff88'
             }}
             onMouseLeave={(event) => {
+              if (isMobile) return
               event.currentTarget.style.background = 'transparent'
               event.currentTarget.style.borderColor = 'rgba(0, 255, 136, 0.25)'
               event.currentTarget.style.textShadow = 'none'
@@ -181,12 +193,12 @@ function CockpitNav({ focusedSection, onNavigate }) {
           <div
             style={{
               fontFamily: 'Space Mono, monospace',
-              fontSize: '11px',
+              fontSize: isMobile ? '10px' : '11px',
               letterSpacing: '0.3em',
               color: '#00ff88',
-              minWidth: '140px',
+              minWidth: isMobile ? '128px' : '140px',
               textAlign: 'center',
-              padding: '6px 16px',
+              padding: isMobile ? '8px 10px' : '6px 16px',
               border: '1px solid rgba(0, 255, 136, 0.15)',
               textShadow: '0 0 6px rgba(0, 255, 136, 0.5)',
               ['--color-accent']: '#00ff88',
@@ -206,15 +218,21 @@ function CockpitNav({ focusedSection, onNavigate }) {
               color: '#00ff88',
               background: 'transparent',
               border: '1px solid rgba(0, 255, 136, 0.25)',
-              padding: '6px 14px',
+              padding: isMobile ? '8px 12px' : '6px 14px',
               transition: 'all 0.15s',
+              touchAction: 'manipulation',
+              WebkitTapHighlightColor: 'transparent',
+              WebkitTouchCallout: 'none',
+              userSelect: 'none',
             }}
             onMouseEnter={(event) => {
+              if (isMobile) return
               event.currentTarget.style.background = 'rgba(0, 255, 136, 0.08)'
               event.currentTarget.style.borderColor = 'rgba(0, 255, 136, 0.6)'
               event.currentTarget.style.textShadow = '0 0 8px #00ff88'
             }}
             onMouseLeave={(event) => {
+              if (isMobile) return
               event.currentTarget.style.background = 'transparent'
               event.currentTarget.style.borderColor = 'rgba(0, 255, 136, 0.25)'
               event.currentTarget.style.textShadow = 'none'
