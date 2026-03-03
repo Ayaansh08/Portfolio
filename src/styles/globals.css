@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg: #080810;
+  --color-text: #f0f4ff;
+  --color-accent: #cbd6ff;
+  --color-surface: rgba(15, 15, 28, 0.85);
+  --color-border: rgba(203, 214, 255, 0.12);
+  --font-mono: 'Space Mono', monospace;
+  --font-sans: 'Inter', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: none !important;
+}
+
+html {
+  overflow: hidden;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+}
+
+#root {
+  min-height: 100vh;
+}
